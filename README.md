@@ -28,7 +28,7 @@ MLOps 프로젝트를 준비하기 위해 매주 진행하는 스터디 관련 �
     <tbody>
         <tr>
             <th>2022-05-30(월)/21:00</th>
-            <td>딥러닝 remind 1</td>
+            <td>딥러닝 remind 세미나 1</td>
             <td>taylor</td>
             <td></td>
             <td></td>
@@ -36,11 +36,11 @@ MLOps 프로젝트를 준비하기 위해 매주 진행하는 스터디 관련 �
     </tbody>
     <tbody>
         <tr>
-            <th>Recordings</th>
+            <th>2022-06-06(월)/21:00</th>
+            <td>triton-server 세미나 1</td>
+            <td>anthony</td>
             <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>현충일</td>
         </tr>
     </tbody>
 </table>
