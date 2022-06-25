@@ -37,16 +37,16 @@ MLOps 프로젝트를 준비하기 위해 매주 진행하는 스터디 관련 �
     </tbody>
     <tbody>
         <tr>
-            <th>2022-06-06(월)/21:00</th>
-            <td>triton-server 세미나 1</td>
+            <th>2022-06-21(화)/19:00</th>
+            <td>grpc 세미나 1</td>
             <td>anthony</td>
             <td></td>
-            <td>현충일</td>
+            <td></td>
         </tr>
     </tbody>
     <tbody>
         <tr>
-            <th>2022-00-00(월)/21:00</th>
+            <th>2022-06-28(화)/20:00</th>
             <td></td>
             <td></td>
             <td></td>
