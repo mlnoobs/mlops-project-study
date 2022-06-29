@@ -47,8 +47,8 @@ MLOps 프로젝트를 준비하기 위해 매주 진행하는 스터디 관련 �
     <tbody>
         <tr>
             <th>2022-06-28(화)/20:00</th>
-            <td></td>
-            <td></td>
+            <td>grpc 세미나 2</td>
+            <td>anthony</td>
             <td></td>
             <td></td>
         </tr>
