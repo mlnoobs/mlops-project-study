@@ -62,4 +62,22 @@ MLOps 프로젝트를 준비하기 위해 매주 진행하는 스터디 관련 �
             <td></td>
         </tr>
     </tbody>
+        <tbody>
+        <tr>
+            <th>2022-07-26(화)/20:00</th>
+            <td>Triton 세미나 2</td>
+            <td>woody</td>
+            <td></td>
+            <td></td>
+        </tr>
+    </tbody>
+        <tbody>
+        <tr>
+            <th>2022-07-26(화)/20:00</th>
+            <td>Helm Chart 세미나</td>
+            <td>ruby</td>
+            <td></td>
+            <td></td>
+        </tr>
+    </tbody>
 </table>
