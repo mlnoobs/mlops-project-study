@@ -1,0 +1,8 @@
+torch==1.12.1
+numpy==1.22.4
+librosa==0.9.1
+soundfile==0.10.3
+scipy==1.8.1
+tqdm
+glob
+matplotlib
