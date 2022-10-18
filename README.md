@@ -80,4 +80,14 @@ MLOps 프로젝트를 준비하기 위해 매주 진행하는 스터디 관련 �
             <td></td>
         </tr>
     </tbody>
+        </tbody>
+        <tbody>
+        <tr>
+            <th>2022-10-17(화)/20:00</th>
+            <td>VAD 세미나</td>
+            <td>tayler</td>
+            <td></td>
+            <td></td>
+        </tr>
+    </tbody>
 </table>
