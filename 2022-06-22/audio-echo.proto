@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+option go_package = "foo.bar"; // go에서 컴파일 할 때 추가
+package foo.bar;
+
+service AudioEcho {
+    rpc echoAudio(stream Chunk) returns (stream Chunk);
+}
+
+message Chunk {
+    bytes data = 1;
+}
