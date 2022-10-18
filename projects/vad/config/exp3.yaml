@@ -32,7 +32,7 @@ model:
 
   # model hyper-params
   in_features: 280  # 40-dim mel을 사용하며, neighbor의 갯수가 7개임을 이미 알고 있어서 40*7=280으로 하드코딩
-  hidden_features_list: [256, 256]
+  hidden_features_list: [256, 256, 256, 256]
   dropout: 0.2  # 0이면 없는것과 같음, 1이면 모든 뉴런을 꺼버림
   lr: 0.0001
   batch_size: 1024

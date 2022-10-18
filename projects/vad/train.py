@@ -46,7 +46,7 @@ def evaluate(epoch, model, logger, config):
     positive_scores = []
     negative_scores = []
     with torch.no_grad():
-        for idx in tqdm(range(test_dataset.__len__()//100)):  # EER 너무 오래 걸려서 일부만...
+        for idx in range(test_dataset.__len__()//100):  # EER 너무 오래 걸려서 일부만...
             mels, labels = test_dataset.get_sample_all_positions(idx)
             scores, preds = model.infer(mels)
             for score, label in zip(scores.reshape(-1), labels.reshape(-1)):
@@ -69,24 +69,16 @@ def evaluate(epoch, model, logger, config):
                 if label == 1:
                     if pred == 1:  # TP는 True positive의 약자로, 실제 True인데, 분류모델에서 예측이 True라고 판단된 경우이다.
                         TP += 1
-                    if pred == 0:  # TN는 True negative의 약자로, 실제 False인데, 분류모델에서 예측이 False라고 판단된 경우이다.
-                        TN += 1
+                    if pred == 0:  # FN는 False negative의 약자로, 실제 True인데, 분류모델에서 예측이 False라고 판단된 경우이다.
+                        FN += 1
                 if label == 0:
                     if pred == 1:  # FP는 False positive의 약자로, 실제 False인데, 분류모델에서 예측이 True라고 판단된 경우이다.
                         FP += 1
-                    if pred == 0:  # FN는 False negative의 약자로, 실제 True인데, 분류모델에서 예측이 False라고 판단된 경우이다.
-                        FN += 1
-        for idx in tqdm(range(test_dataset.__len__()//100)):  # EER 너무 오래 걸려서 일부만...
-            mels, labels = test_dataset.get_sample_all_positions(idx)
-            scores, preds = model.infer(mels)
-            for score, label in zip(scores.reshape(-1), labels.reshape(-1)):
-                if label == 1:
-                    positive_scores.append(float(score))
-                if label == 0:
-                    negative_scores.append(float(score))
-    metric_dict['precision'] = TP / (TP + FP)
-    metric_dict['recall']    = TP / (TP + FN)
-    metric_dict['accuracy']  = (TP + TN) / (TP + TN + FP + FN)
+                    if pred == 0:  # TN는 True negative의 약자로, 실제 False인데, 분류모델에서 예측이 False라고 판단된 경우이다.
+                        TN += 1
+    metric_dict['precision'] = TP / (TP + FP)  # 분류모델이 True라고 예측한 샘플들 중에서, 라벨이 True로 일치하는 비율
+    metric_dict['recall']    = TP / (TP + FN)  # 라벨이 True인 샘플들 중에서, 분류모델이 True로 예측해서 일치하는 비율
+    metric_dict['accuracy']  = (TP + TN) / (TP + TN + FP + FN)  # True & False 모두를 올바르게 예측한 정확도
     metric_dict['f1_score']  = 2*(metric_dict['precision']*metric_dict['recall'])/(metric_dict['precision']+metric_dict['recall'])
 
     # plot 3 samples
@@ -118,7 +110,7 @@ def main(output_directory, load_checkpoint_filename, config):
     train_loader = DataLoader(train_dataset, shuffle=True, batch_size=config['batch_size'])
     model.train()
     for epoch in range(config['n_epochs']):
-        for batch_idx, (mel, label) in enumerate(train_loader):
+        for mel, label in train_loader:
             output = model(mel)
             #label = torch.nn.functional.one_hot(label.long()).squeeze(1).float()
             loss = loss_fn(output, label)
@@ -137,9 +129,9 @@ def main(output_directory, load_checkpoint_filename, config):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('-o', '--output_directory', type=str, default='result',
+    parser.add_argument('-o', '--output-directory', type=str, default='result',
                         help='directory to save checkpoints')
-    parser.add_argument('-f', '--load_checkpoint_filename', type=str, default=None,
+    parser.add_argument('-f', '--load-checkpoint-filename', type=str, default=None,
                         required=False, help='load checkpoint filename')
     parser.add_argument('-c', '--yaml-dir', type=str, default='./config/base.yaml',
                         help="YAML file for config")
