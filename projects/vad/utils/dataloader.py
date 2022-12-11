@@ -4,12 +4,8 @@ from torch.utils.data import Dataset
 import numpy as np
 from glob import glob
 
-def process_neighbor(w, u):
-    # https://github.com/jtkim-kaist/VAD/blob/master/lib/python/utils.py#L471
-    neighbors_1 = np.arange(-w, -u, u)
-    neighbors_2 = np.array([-1, 0, 1])
-    neighbors_3 = np.arange(1+u, w+1, u)
-    neighbors = np.concatenate((neighbors_1, neighbors_2, neighbors_3), axis=0)
+def process_neighbor(p, f):
+    neighbors = np.arange(-p, f+1)
     return neighbors
 
 class VADDataset(Dataset):
@@ -20,9 +16,9 @@ class VADDataset(Dataset):
         print("loaded {}".format(base_dir))
         print("{} sentences".format(len(self.mel_dir_list)))
 
-        self.w = config['w']
-        self.u = config['u']
-        self.neighbors = process_neighbor(self.w, self.u)
+        self.p = config['p']
+        self.f = config['f']
+        self.neighbors = process_neighbor(self.p, self.f)
         self.device = config['device']
 
     def __len__(self):
@@ -51,11 +47,11 @@ class VADDataset(Dataset):
         C, L = mel.shape
 
         # mel과 label의 앞 뒤를 padding
-        mel = np.pad(mel, ((0, 0), (self.w, self.w)))
-        label = np.pad(label, (self.w, self.w))
+        mel = np.pad(mel, ((0, 0), (self.p, self.f)))
+        label = np.pad(label, (self.p, self.f))
         C, L = mel.shape
 
-        all_positions = np.arange(self.w, L-self.w)
+        all_positions = np.arange(self.p, L-self.f)
         mel_neighbors = [[mel[:, position+n] for n in self.neighbors] for position in all_positions]
         mel_neighbors = np.asarray(mel_neighbors).reshape(-1, C*len(self.neighbors))
         mel = torch.from_numpy(mel_neighbors)
@@ -71,16 +67,16 @@ class VADDataset(Dataset):
         label = np.load(self.label_dir_list[idx])
 
         # mel과 label의 앞 뒤를 padding
-        mel = np.pad(mel, ((0, 0), (self.w, self.w)))
-        label = np.pad(label, (self.w, self.w))
+        mel = np.pad(mel, ((0, 0), (self.p, self.f)))
+        label = np.pad(label, (self.p, self.f))
         C, L = mel.shape
 
         # # 임의의 index를 완전히 랜덤하게 추출?
-        # position = np.random.randint(self.w, L-self.w)
+        # position = np.random.randint(self.p, L-self.f)
         # 임의의 index를 positive와 negative에서 각각 50% 확률로 추출
         # 한 문장 내에 어느 한 쪽 label이 한개도 없는 경우 예외처리
-        positive_indices = np.where(label[self.w:L-self.w] == 1)[0] + self.w
-        negative_indices = np.where(label[self.w:L-self.w] == 0)[0] + self.w
+        positive_indices = np.where(label[self.p:L-self.f] == 1)[0] + self.p
+        negative_indices = np.where(label[self.p:L-self.f] == 0)[0] + self.p
         if len(negative_indices) == 0:
             position = np.random.choice(positive_indices)
         elif len(positive_indices) == 0:

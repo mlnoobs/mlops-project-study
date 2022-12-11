@@ -110,7 +110,7 @@ def main(output_directory, load_checkpoint_filename, config):
     train_loader = DataLoader(train_dataset, shuffle=True, batch_size=config['batch_size'])
     model.train()
     for epoch in range(config['n_epochs']):
-        for mel, label in train_loader:
+        for mel, label in tqdm(train_loader):
             output = model(mel)
             #label = torch.nn.functional.one_hot(label.long()).squeeze(1).float()
             loss = loss_fn(output, label)
